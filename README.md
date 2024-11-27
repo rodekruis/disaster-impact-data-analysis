@@ -21,7 +21,7 @@ The pre-merged data comes from various sources:
 - Relief; 
 and a text-mining algorithm applied to newspaper articles between 2009 and 2017,
 
-and is not stored in the repository. It can be provided upon request. Of the merged and resulting .csv's a sample is placed in the ``data/`` folder.
+and is not stored in the repository, though can be provided upon request. Of the merged and resulting .csv's a sample is placed in the ``data/`` folder.
 
 ### **Input**
 
@@ -42,11 +42,15 @@ The inputs for ``preprocess.py``:
 
 ## Codes
 
-Because the impact data cannot be shared here, the code is not completely runnable. ``preprocess.py``, can be ran, however, though with only a sample of the impact data. To run for your own purposes, we'd suggest copying the functions and parts of interest into a script/notebook for experimentation, or the impact data can be provided upon request (to one of the contributors, or [pphung@redcross.nl](pphung@redcross.nl)).
+### Structure:
+
+(1) `merge.py` goes through the several sources (named above), standardises some of their elements (such as DateTime information), extracts central information such as admin unit (also called 'Cercle'), limits events with "unrealistic" durations, and exports a .csv.
+
+(2) `preprocess.py` preprocesses the merged impact data to generate consistent impact events per administrative unit. It cleans and normalises by renaming columns, standardising 'Cercle' (i.e. administrative unit names, and applying manual corrections for other inconsistencies. It handles some of the missing or invalid 'Cercle' information by mapping known 'Commune' names to their respective known 'Cercle' (Commune is a subset of Cercle). Then, 'Cercle' names are mapped to standardised PCODES using shapefiles, and manual mapping is done for then still unmatched names. Events get a duration, unique identifiers, are sorted, and finally filtered for duplicates.
 
 ### Setup
 
-The setup only requires a few standard packages.
+Because the impact data cannot be shared here, the code is not completely runnable. ``preprocess.py`` can be ran, however, though with only a sample of the impact data. To run for your own purposes, we'd suggest copying the functions and parts of interest into a script/notebook for experimentation, or the impact data can be provided upon request (to one of the contributors, or [pphung@redcross.nl](pphung@redcross.nl)).
 
 #### Requirements
 
