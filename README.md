@@ -3,11 +3,11 @@
 This repository contains scripts to merge and preprocess impact data from several sources into uniform "flood events," i.e. events with a time, location, and other metadata, readily-usable for other analyses.
 As impact data can, and usually is, messy and specific, most of the code can be used as inspiration, but will not be re-usable for other data.
 
-The scripts are part of another [project](https://github.com/rodekruis/river-flood-data-analysis), which does an impact-based assessment and comparison of different riverine flood forecasting tools in Mali (of which notable, [GloFAS](https://global-flood.emergency.copernicus.eu/) and [Google FloodHub](https://sites.research.google/floods/l/0/0/3)).
+The scripts are part of another [project](https://github.com/rodekruis/river-flood-data-analysis), which does an impact-based assessment and comparison of different riverine flood forecasting tools in Mali (of which notable, [GloFAS](https://global-flood.emergency.copernicus.eu/) and [Google Flood Hub](https://sites.research.google/floods/l/0/0/3)).
 
 **Contributors**: Els Kuipers ([elskuipers@rodekruis.nl](mailto:elskuipers@rodekruis.nl)) and Tijn Oldenburg [toldenburg@rodekruis.nl](mailto:toldenburg@rodekruis.nl).
 
-**Contact**: [valentijn7](https://github.com/valentijn7)
+**Contact**: [valentijn7](https://github.com/valentijn7); [toldenburg@rodekruis.nl](mailto:toldenburg@rodekruis.nl)
 
 ## **Data**
 
@@ -19,7 +19,7 @@ The pre-merged data comes from various sources:
 - DGPC Mali;
 - CatNat;
 - Relief; 
-and a text-mining algorithm applied to newspaper articles between 2009 and 2017,
+- and a text-mining algorithm applied to newspaper articles between 2009 and 2017,
 
 and is not stored in the repository, though can be provided upon request. Of the merged and resulting .csv's a sample is placed in the ``data/`` folder.
 
