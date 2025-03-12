@@ -78,7 +78,7 @@ def export_dict_impact_events_to_csv(
     print(df_flood_events) if verbose else None
     print(f'exporting {df_flood_events.shape[0]} impact events to csv')
     df_flood_events.to_csv(
-        f'data/impact_events_per_admin_{df_flood_events.shape[0]}.csv',
+        f'../data/processed/flood_events/impact_events_per_admin_{df_flood_events.shape[0]}.csv',
         sep = ';', decimal = '.', index = False)
     
 
@@ -153,6 +153,26 @@ def map_cercle_names_to_pcodes(
         raise ValueError(f'Unmapped Cercle values: {unmapped_cercles}')
     
     return df
+
+
+def overlaps_dry_season(row: pd.Series) -> bool:
+    """ Checks whether the flood event overlaps the dry season
+    (the months March, April, May, June)
+
+    :param row: row from the DataFrame
+    :return: whether the flood event overlaps the dry season
+    """
+    date_range = pd.date_range(row['flood_start'], row['flood_end'])
+    return any(d.month in [3, 4, 5, 6] for d in date_range)
+
+
+def filter_dry_season_events(df: pd.DataFrame) -> pd.DataFrame:
+    """ Filters out the flood events that overlap the dry season
+
+    :param df: DataFrame with flood events
+    :return: DataFrame with flood events that do not overlap the dry season
+    """
+    return df[~df.apply(overlaps_dry_season, axis = 1)]
 
 
 def merge_duplicate_events(d_events: Dict[str, pd.DataFrame]) -> Dict[str, pd.DataFrame]:
@@ -336,9 +356,15 @@ def process_impact_data_to_events(
         
                         # merge duplicate events
     dict_events_merged = merge_duplicate_events(dict_events)
+                        # filter out dry season by removing events with at least one day
+                        # in the period of March to June (inclusive)
+    for _, df in dict_events_merged.items():
+        df = filter_dry_season_events(df.copy())
                         # sort again
-    for _, value in dict_events_merged.items():
-        value.sort_values(by = ['flood_start', 'flood_end'], inplace = True)
+        df.sort_values(by = ['flood_start', 'flood_end'], inplace = True)
+
+                        # export to csv and return
+    export_dict_impact_events_to_csv(dict_events_merged, False, verbose)
 
                         # export to csv and return
     export_dict_impact_events_to_csv(dict_events_merged, verbose)
